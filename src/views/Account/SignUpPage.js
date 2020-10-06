@@ -58,7 +58,7 @@ const SignUpPage = () => {
     }
 
     try {
-      let signup = await Service.BettingAPI.post("/Account/Register", postData);
+      let signup = await Service.BettingAPI.post("Register", postData);
       setLoading(false);
       console.log(signup.data);
     } catch (error) {
