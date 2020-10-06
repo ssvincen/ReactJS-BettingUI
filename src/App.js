@@ -16,12 +16,13 @@ import ChangePassword from './views/Account/ChangePassword.js';
 import UserInfo from './views/Account/UserInfo.js';
 import ConfirmEmailAddress from './views/Account/confirmEmail.js';
 import TournamentPage from './views/Tournament/TournamentPage.js';
+import EventsPage from './views/Tournament/EventsPage.js';
 
 const dashboardRoutes = [];
 
 function App() {
   const [ user, setUser ] = useState(Service.GetLoginUser())
-  const [ session, setSession] = useState(sessionStorage.getItem('DieHardUser'))
+  const [ session, setSession] = useState(sessionStorage.getItem('BettingUser'))
   const providerUser = useMemo(() => ({ user, setUser, session, setSession }), [user , setUser, session, setSession]);
 
   return (
@@ -46,6 +47,7 @@ function App() {
           <PrivateRoute restricted={true} path="/updateProfile" component={UserInfo}/>
           <PublicRoute restricted={false} path="/confirmEmail" component={ConfirmEmailAddress} />
           <PrivateRoute restricted={true} path="/tournament" component={TournamentPage}/>
+          <PrivateRoute restricted={true} path="/event" component={EventsPage}/>
           
         <Footer />
       </UserProvider>

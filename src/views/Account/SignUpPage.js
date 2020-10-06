@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
@@ -30,6 +30,9 @@ const SignUpPage = () => {
   const [errorDetail, setErrorDetail] = useState("");
 
 
+  let history = useHistory();
+  let location = useLocation();
+
   const [firstname, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -37,36 +40,28 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-
-  // const validateForm = () => {
-  //   return true;
-  // }
-
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     setLoading(true);
     let postData = {
       FirstName: firstname,
       Surname: surname,
-      EmailAddress: email,
-      PhoneNumber: mobileNumber,
+      Email: email,
       Password: password,
       ConfirmPassword: confirmPassword
     }
 
-    try {
-      let signup = await Service.BettingAPI.post("Register", postData);
-      setLoading(false);
-      console.log(signup.data);
-    } catch (error) {
-      console.log(error)
-      setLoading(false);
-      setErrorDetail(error.response);
-    }
-  }
+    await Service.BettingAPI.post("Register", postData)
+      .then(res => {
+        setLoading(false);
+        history.replace("/login");
+        console.log(res);
+        setErrorDetail("")
+      }).catch(res => {
+        setLoading(false);
+        setErrorDetail(res.data);
+      })
+  };
 
   return (
     <div>
@@ -76,8 +71,8 @@ const SignUpPage = () => {
           backgroundImage: "url(" + image + ")",
           backgroundSize: "cover",
           backgroundPosition: "top center"
-        }}
-      >
+        }}>
+          
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={8}>

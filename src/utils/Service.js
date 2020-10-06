@@ -1,7 +1,6 @@
 import Axios from "axios";
 
-const apiUrl = 'https://uscapidev.azurewebsites.net/';
-//const apiUrl = 'https://localhost:44349/';
+const apiUrl = 'https://localhost:44349/';
 const BettingAPI = Axios.create({
     baseURL: apiUrl
 });
@@ -11,17 +10,17 @@ const api = Axios.create({
 });
 
 const isLogin = () =>{
-    const user = sessionStorage.getItem('DieHardUser');  
+    const user = sessionStorage.getItem('BettingUser');  
     return (user != null) ? true : false;
 }
 
 const GetLoginUser = () =>{
-    const user = sessionStorage.getItem('DieHardUser');  
+    const user = sessionStorage.getItem('BettingUser');  
     return user ? JSON.parse(user) : null;   
 }
 
 const AutHeader = () => {
-    let token = JSON.parse(sessionStorage.getItem('DieHardToken'));
+    let token = JSON.parse(sessionStorage.getItem('BettingToken'));
     if (token) {
         return {
             'Content-Type': 'application/json', 
@@ -33,8 +32,8 @@ const AutHeader = () => {
 }
 
 const LogOut = () => {    
-    sessionStorage.removeItem('DieHardToken');
-    sessionStorage.removeItem('DieHardUser');
+    sessionStorage.removeItem('BettingToken');
+    sessionStorage.removeItem('BettingUser');
 }
 
 export const Service = {

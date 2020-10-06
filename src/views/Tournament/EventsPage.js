@@ -8,13 +8,17 @@ import { Alert } from '@material-ui/lab';
 import { Service } from "../../utils/Service.js";
 import { Grid } from "@material-ui/core";
 
-
 const useStyles = makeStyles(styles);
 
-const TournamentPage = () => {
-  const classes = useStyles();
+const EventsPage = () => {
+    const classes = useStyles();
   var columns = [
-    { title: "TournamentID", field: "TournamentID", hidden: true },
+    { title: "EventID", field: "EventID", hidden: true },
+    { title: "Tournament Id", field: "TournamentID", hidden: true },
+    { title: "Name", field: "EventName" },
+    { title: "Number", field: "EventNumber" },
+    { title: "DateTime", field: "EventDateTime" },
+    { title: "EndDateTime", field: "Event EndDateTime" },
     { title: "Tournament Name", field: "TournamentName" }
   ];
 
@@ -23,12 +27,12 @@ const TournamentPage = () => {
   const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
-    Service.BettingAPI.get("/Tournament/GetTournament", { headers: Service.AutHeader() })
+    Service.BettingAPI.get("Event/GetEvent", { headers: Service.AutHeader() })
       .then(res => {
         setData(res.data)
       })
       .catch(error => {
-        console.log("Error")
+        console.log("Error", error)
       })
   }, [])
 
@@ -45,7 +49,7 @@ const TournamentPage = () => {
         TournamentName: newData.TournamentName
       };
 
-      Service.BettingAPI.patch("/Tournament/UpdateTournament/", postData, { headers: Service.AutHeader() })
+      Service.BettingAPI.patch("Event/UpdateEvent", postData, { headers: Service.AutHeader() })
         .then(res => {
           console.log(res)
           const dataUpdate = [...data];
@@ -81,7 +85,7 @@ const TournamentPage = () => {
       TournamentName: newData.TournamentName
     };
     if (errorList.length < 1) { //no error      
-      Service.BettingAPI.post("Tournament/AddTournament", postData, { headers: Service.AutHeader() })
+      Service.BettingAPI.post("Event/AddEvent", postData, { headers: Service.AutHeader() })
         .then(res => {
           console.log(res.data);
         }).catch(res => {
@@ -101,7 +105,7 @@ const TournamentPage = () => {
       tournamentId: oldData.TournamentID
     };
 
-    Service.BettingAPI.delete("Tournament/DeleteTournament", postData, { headers: Service.AutHeader() })
+    Service.BettingAPI.delete("Event/DeleteEvent", postData, { headers: Service.AutHeader() })
       .then(res => {
         console.log(res.data);
         const dataDelete = [...data];
@@ -117,9 +121,8 @@ const TournamentPage = () => {
         resolve()
       })
   }
-
-  return (
-    <div
+    return (
+        <div
       className={classes.pageHeader}
       style={{
         backgroundImage: "url(" + image + ")",
@@ -139,7 +142,7 @@ const TournamentPage = () => {
               }
             </div>
             <MaterialTable
-              title="Tournaments"
+              title="Events"
               columns={columns}
               data={data}
               editable={{
@@ -162,7 +165,7 @@ const TournamentPage = () => {
         </div>
       </Grid>
     </div>
-  );
+    )
 }
 
-export default TournamentPage
+export default EventsPage

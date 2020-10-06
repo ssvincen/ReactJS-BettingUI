@@ -41,11 +41,8 @@ export default function HeaderLinks(props) {
                 <Link to="/tournament" className={classes.dropdownLink}>
                   Tournament
                   </Link>,
-                <Link to="/groups" className={classes.dropdownLink}>
-                  All Groups
-                  </Link>,
-                <Link to="/clientGroup" className={classes.dropdownLink}>
-                  All GroupClients
+                <Link to="/event" className={classes.dropdownLink}>
+                  Events
                   </Link>
               ]}
             />

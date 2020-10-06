@@ -56,8 +56,8 @@ export default function LoginPage() {
     try {
       let user = await Service.BettingAPI.post(`Login?username=${email}&password=${password}`);
       setUser(email);
-      sessionStorage.setItem('DieHardToken', JSON.stringify(user.data));
-      sessionStorage.setItem('DieHardUser', JSON.stringify(email));
+      sessionStorage.setItem('BettingToken', JSON.stringify(user.data));
+      sessionStorage.setItem('BettingUser', JSON.stringify(email));
       history.replace(from);
     } catch (error) {
       setLoading(false);
